@@ -9,7 +9,7 @@ interface FormState {
 }
 
 export const buildScript = async (formState: FormState, formData: FormData) => {
-  const input = formData.get('input') as string;
+  const input = formData.get('code') as string;
 
   const result = await esbuild.build({
     entryPoints: ['index.js'],
