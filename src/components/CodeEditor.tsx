@@ -1,9 +1,13 @@
-import MonacoEditor from '@monaco-editor/react';
+import { parse } from '@babel/parser';
+import traverse from '@babel/traverse';
+import MonacoEditor, { OnMount } from '@monaco-editor/react';
 import { editor } from 'monaco-editor';
+import Highlighter from 'monaco-jsx-highlighter';
 import prettier from 'prettier';
 import babel from 'prettier/plugins/babel';
 import esTree from 'prettier/plugins/estree';
 import { useRef } from 'react';
+import './jsx-highlighter.css';
 import { Button } from './ui/button';
 
 interface Props {
@@ -30,8 +34,21 @@ export const CodeEditor = ({ initialValue, onChange }: Props) => {
     }
   };
 
+  const handleEditorOnMount: OnMount = (editor) => {
+    editorRef.current = editor;
+
+    const highlighter = new Highlighter(
+      // @ts-ignore
+      window.monaco,
+      parse,
+      traverse,
+      editor
+    );
+    highlighter.highLightOnDidChangeModelContent();
+  };
+
   return (
-    <div className='group relative h-full'>
+    <div className='code-editor group relative h-full'>
       <Button
         variant='secondary'
         className='absolute z-20 top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300'
@@ -43,9 +60,7 @@ export const CodeEditor = ({ initialValue, onChange }: Props) => {
       <MonacoEditor
         height={500}
         value={initialValue}
-        onMount={(editor) => {
-          editorRef.current = editor;
-        }}
+        onMount={handleEditorOnMount}
         onChange={(value) => onChange(value || '')}
         theme='vs-dark'
         language='javascript'

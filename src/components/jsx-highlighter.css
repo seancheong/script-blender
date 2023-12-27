@@ -1,0 +1,61 @@
+.code-editor .JSXElement.JSXIdentifier {
+  color: #eb4d4b;
+}
+
+.code-editor .JSXElement.JSXBracket {
+  color: #95afc0;
+}
+
+.code-editor .JSXElement.JSXText {
+  color: #d4d4d4;
+}
+
+.code-editor .JSXElement.JSXGlyph {
+  background: cyan;
+  opacity: 0.25;
+}
+
+.code-editor .JSXOpeningFragment.JSXBracket {
+  color: #0080ff;
+  font-weight: bold;
+}
+
+.code-editor .JSXClosingFragment.JSXBracket {
+  color: #0080ff;
+  font-weight: bold;
+}
+
+.code-editor .JSXOpeningElement.JSXBracket {
+  color: #808080;
+  font-weight: bold;
+}
+
+.code-editor .JSXOpeningElement.JSXIdentifier {
+  color: #569cd6;
+}
+
+.code-editor .JSXClosingElement.JSXBracket {
+  color: #808080;
+  font-weight: lighter;
+}
+
+.code-editor .JSXClosingElement.JSXIdentifier {
+  color: #569cd6;
+  font-weight: lighter;
+}
+
+.code-editor .JSXAttribute.JSXIdentifier {
+  color: #9cdcfe;
+}
+
+.code-editor .JSXExpressionContainer.JSXBracket {
+  color: #0080ff;
+}
+
+.code-editor .JSXSpreadChild.JSXBracket {
+  color: #0080ff;
+}
+
+.code-editor .JSXSpreadAttribute.JSXBracket {
+  color: #0080ff;
+}
