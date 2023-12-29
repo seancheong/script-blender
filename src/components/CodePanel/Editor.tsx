@@ -7,8 +7,8 @@ import prettier from 'prettier';
 import babel from 'prettier/plugins/babel';
 import esTree from 'prettier/plugins/estree';
 import { useRef } from 'react';
+import { Button } from '../ui/button';
 import './jsx-highlighter.css';
-import { Button } from './ui/button';
 
 interface Props {
   initialValue: string;
@@ -48,7 +48,7 @@ export const CodeEditor = ({ initialValue, onChange }: Props) => {
   };
 
   return (
-    <div className='code-editor group relative h-full'>
+    <div className='editor group relative h-full'>
       <Button
         variant='secondary'
         className='absolute z-20 top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300'
