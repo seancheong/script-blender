@@ -48,7 +48,7 @@ export const CodeEditor = ({ initialValue, onChange }: Props) => {
   };
 
   return (
-    <div className='editor group relative h-full'>
+    <div className='editor group relative h-full p-1 bg-zinc-800 border-2 border-neutral-400 rounded-t-lg @md:rounded-tr-none @md:rounded-l-lg'>
       <Button
         variant='secondary'
         className='absolute z-20 top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300'
@@ -58,7 +58,6 @@ export const CodeEditor = ({ initialValue, onChange }: Props) => {
       </Button>
 
       <MonacoEditor
-        height={500}
         value={initialValue}
         onMount={handleEditorOnMount}
         onChange={(value) => onChange(value || '')}

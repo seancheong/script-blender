@@ -1,6 +1,13 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '../ui/select';
 
 interface Props {
   code: string;
@@ -53,12 +60,25 @@ export const Preview = ({ code, error }: Props) => {
   }, [code]);
 
   return (
-    <div className='relative'>
+    <div className='relative h-full bg-zinc-800 p-4 border-2 border-neutral-400 rounded-b-lg @md:rounded-bl-none @md:rounded-r-lg'>
+      <Select>
+        <SelectTrigger className='w-28 mb-4 h-8'>
+          <SelectValue placeholder='Console' />
+        </SelectTrigger>
+
+        <SelectContent className='h-8'>
+          <SelectItem value='console' className='py-0'>
+            Console
+          </SelectItem>
+        </SelectContent>
+      </Select>
+
       <iframe
         title='preview'
         ref={iframe}
         sandbox='allow-scripts'
         srcDoc={html}
+        className='w-full h-full bg-zinc-800'
       />
       {error && (
         <div className='absolute top-2 left-2 text-red-500'>{error}</div>
