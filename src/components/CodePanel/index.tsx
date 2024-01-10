@@ -10,6 +10,7 @@ import {
 } from '../ui/resizable';
 import { CodeEditor } from './Editor';
 import { Preview } from './Preview';
+import { SkeletonPanel } from './SkeletonPanel';
 
 const elementId = 'code-panel';
 const initialValue = '// Write your code here';
@@ -18,6 +19,7 @@ export const CodePanel = () => {
   const [code, setCode] = useState('');
   const [output, setOutput] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(true);
   const [_document, setDocument] = useState<Document | null>(null);
 
   const targetElement = _document?.getElementById(elementId);
@@ -33,6 +35,10 @@ export const CodePanel = () => {
 
   useEffect(() => {
     setDocument(document);
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
   }, []);
 
   useEffect(() => {
@@ -47,19 +53,23 @@ export const CodePanel = () => {
 
   return (
     <div id={elementId} className='@container h-full'>
-      <ResizablePanelGroup
-        direction={isMobileLayout ? 'vertical' : 'horizontal'}
-      >
-        <ResizablePanel>
-          <CodeEditor initialValue={initialValue} onChange={setCode} />
-        </ResizablePanel>
+      {loading ? (
+        <SkeletonPanel />
+      ) : (
+        <ResizablePanelGroup
+          direction={isMobileLayout ? 'vertical' : 'horizontal'}
+        >
+          <ResizablePanel>
+            <CodeEditor initialValue={initialValue} onChange={setCode} />
+          </ResizablePanel>
 
-        <ResizableHandle withHandle />
+          <ResizableHandle withHandle />
 
-        <ResizablePanel>
-          <Preview code={output} error={error} />
-        </ResizablePanel>
-      </ResizablePanelGroup>
+          <ResizablePanel>
+            <Preview code={output} error={error} />
+          </ResizablePanel>
+        </ResizablePanelGroup>
+      )}
     </div>
   );
 };

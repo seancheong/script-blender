@@ -60,7 +60,7 @@ export const Preview = ({ code, error }: Props) => {
   }, [code]);
 
   return (
-    <div className='relative h-full bg-zinc-800 p-4 border-2 border-neutral-400 rounded-b-lg @md:rounded-bl-none @md:rounded-r-lg'>
+    <div className='relative h-full bg-zinc-800 p-4 border-2 border-neutral-400 rounded-lg'>
       <Select>
         <SelectTrigger className='w-28 mb-4 h-8'>
           <SelectValue placeholder='Console' />
