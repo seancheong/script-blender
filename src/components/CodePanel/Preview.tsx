@@ -27,6 +27,19 @@ const html = `
           console.error(error);
         };
 
+        window.console.log = (...args) => {
+          const formattedArgs = args.map((arg) => {
+            if (typeof arg === 'object') {
+              return JSON.stringify(arg);
+            } else {
+              return arg;
+            }
+          });
+
+          const root = document.querySelector('#root');
+          root.innerHTML += '<div style="color: white;">' + formattedArgs.join(' ') + '</div>';
+        };
+
         window.addEventListener('error', (event) => {
           event.preventDefault();
           handleError(event.error);
@@ -81,7 +94,7 @@ export const Preview = ({ code, error }: Props) => {
         className='w-full h-full bg-zinc-800'
       />
       {error && (
-        <div className='absolute top-2 left-2 text-red-500'>{error}</div>
+        <div className='absolute top-16 left-4 text-red-500'>{error}</div>
       )}
     </div>
   );
