@@ -8,6 +8,13 @@ import babel from 'prettier/plugins/babel';
 import esTree from 'prettier/plugins/estree';
 import { useRef } from 'react';
 import { Button } from '../ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '../ui/select';
 import './jsx-highlighter.css';
 
 interface Props {
@@ -48,19 +55,32 @@ export const CodeEditor = ({ initialValue, onChange }: Props) => {
   };
 
   return (
-    <div className='editor group relative h-full p-1 bg-zinc-800 border-2 border-neutral-400 rounded-lg'>
+    <div className='editor group relative h-full pt-4 bg-[#1e1e1e] border-2 border-neutral-400 rounded-lg'>
       <Button
         variant='secondary'
-        className='absolute z-20 top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300'
+        className='absolute z-20 top-4 right-4 opacity-0 h-8 group-hover:opacity-100 transition-opacity duration-300'
         onClick={handleFormatClick}
       >
         Format
       </Button>
 
+      <Select>
+        <SelectTrigger className='w-28 ml-4 mb-4 h-8'>
+          <SelectValue placeholder='Javascript' />
+        </SelectTrigger>
+
+        <SelectContent className='h-8'>
+          <SelectItem value='javascript' className='py-0'>
+            Javascript
+          </SelectItem>
+        </SelectContent>
+      </Select>
+
       <MonacoEditor
         value={initialValue}
         onMount={handleEditorOnMount}
         onChange={(value) => onChange(value || '')}
+        height={'90%'}
         theme='vs-dark'
         language='javascript'
         options={{
