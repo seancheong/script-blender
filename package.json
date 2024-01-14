@@ -1,7 +1,15 @@
 {
   "name": "script-blender",
   "version": "0.1.0",
-  "private": true,
+  "description": "A dynamic web-based coding platform for JavaScript, featuring real-time execution with Monaco Editor integration",
+  "author": "Sean Cheong Zhen Xiong (https://github.com/seancheong)",
+  "keywords": [
+    "react",
+    "tailwindcss",
+    "typescript",
+    "nextjs",
+    "monaco-editor"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
