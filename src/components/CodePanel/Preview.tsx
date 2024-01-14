@@ -68,7 +68,7 @@ export const Preview = ({ code, error }: Props) => {
 
   return (
     <div className='relative h-full bg-zinc-800 p-4 border-2 border-neutral-400 rounded-b-[20px] @md:rounded-l-none @md:rounded-r-[20px]'>
-      <h4 className='text-white mb-3'>Console</h4>
+      <h4 className='text-zinc-50 mb-3'>Console</h4>
 
       <Separator />
 
