@@ -55,7 +55,7 @@ export const CodeEditor = ({ initialValue, onChange }: Props) => {
   };
 
   return (
-    <div className='editor group relative h-full pt-4 bg-[#1e1e1e] border-2 border-neutral-400 rounded-lg'>
+    <div className='editor group relative h-full pt-4 bg-[#1e1e1e] border-2 border-neutral-400 rounded-t-[20px] @md:rounded-r-none @md:rounded-l-[20px]'>
       <Button
         variant='secondary'
         className='absolute z-20 top-4 right-4 opacity-0 h-8 group-hover:opacity-100 transition-opacity duration-300'
