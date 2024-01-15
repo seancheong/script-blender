@@ -1,7 +1,7 @@
 import { parse } from '@babel/parser';
 import traverse from '@babel/traverse';
 import MonacoEditor, { OnMount } from '@monaco-editor/react';
-import { editor } from 'monaco-editor';
+import { editor, KeyCode, KeyMod } from 'monaco-editor';
 import Highlighter from 'monaco-jsx-highlighter';
 import prettier from 'prettier';
 import babel from 'prettier/plugins/babel';
@@ -20,9 +20,10 @@ import './jsx-highlighter.css';
 interface Props {
   initialValue: string;
   onChange(value: string): void;
+  onExecute(value: string): void;
 }
 
-export const CodeEditor = ({ initialValue, onChange }: Props) => {
+export const CodeEditor = ({ initialValue, onChange, onExecute }: Props) => {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
 
   const handleFormatClick = async () => {
@@ -52,6 +53,10 @@ export const CodeEditor = ({ initialValue, onChange }: Props) => {
       editor
     );
     highlighter.highLightOnDidChangeModelContent();
+
+    editor.addCommand(KeyMod.CtrlCmd | KeyCode.KeyS, () => {
+      onExecute(editor.getModel()?.getValue() || '');
+    });
   };
 
   return (
