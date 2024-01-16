@@ -2,19 +2,28 @@
 
 import { useMobileLayout } from '@/hooks/useMobileLayout';
 import { buildCode } from '@/services/codeService';
+import dynamic from 'next/dynamic';
 import { useCallback, useEffect, useState } from 'react';
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup
 } from '../ui/resizable';
-import { CodeEditor } from './Editor';
 import { Preview } from './Preview';
 import { SkeletonPanel } from './SkeletonPanel';
 
 const elementId = 'code-panel';
 const initialValue =
   '// Write your code here\n// then press Ctrl+S/Cmd+S to execute it';
+
+const DynamicEditor = dynamic(
+  () =>
+    import('@/components/CodePanel/Editor').then((module) => module.default),
+  {
+    ssr: false,
+    loading: () => <SkeletonPanel />
+  }
+);
 
 export const CodePanel = () => {
   const [code, setCode] = useState('');
@@ -66,7 +75,7 @@ export const CodePanel = () => {
           direction={isMobileLayout ? 'vertical' : 'horizontal'}
         >
           <ResizablePanel>
-            <CodeEditor
+            <DynamicEditor
               initialValue={initialValue}
               onChange={setCode}
               onExecute={handleCodeExecution}

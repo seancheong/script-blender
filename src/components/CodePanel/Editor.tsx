@@ -23,7 +23,7 @@ interface Props {
   onExecute(value: string): void;
 }
 
-export const CodeEditor = ({ initialValue, onChange, onExecute }: Props) => {
+const CodeEditor = ({ initialValue, onChange, onExecute }: Props) => {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
 
   const handleFormatClick = async () => {
@@ -102,3 +102,5 @@ export const CodeEditor = ({ initialValue, onChange, onExecute }: Props) => {
     </div>
   );
 };
+
+export default CodeEditor;
