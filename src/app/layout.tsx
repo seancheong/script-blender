@@ -6,10 +6,36 @@ import './globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
+const title = 'Script Blender';
+const description =
+  'A web-based platform offers an innovative environment for developers to create, edit, and share JavaScript and TypeScript code snippets';
+
 export const metadata: Metadata = {
-  title: 'Script Blender',
-  description:
-    'A web-based platform offers an innovative environment for developers to create, edit, and share JavaScript and TypeScript code snippets'
+  title,
+  description,
+  keywords:
+    'JavaScript, TypeScript, Coding, Programming, Code Editor, Monaco Editor, Interactive Coding, Web Development',
+  authors: [
+    { name: 'Sean Cheong Zhen Xiong', url: 'https://github.com/seancheong' }
+  ],
+  metadataBase: new URL('https://www.script-blender.com'),
+  openGraph: {
+    title,
+    description,
+    url: 'https://www.script-blender.com',
+    type: 'website',
+    images: [
+      {
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/screenshot.png`
+      }
+    ]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title,
+    description,
+    images: [`${process.env.NEXT_PUBLIC_BASE_URL}/screenshot.png`]
+  }
 };
 
 export default function RootLayout({
