@@ -21,7 +21,9 @@ const DynamicEditor = dynamic(
     import('@/components/CodePanel/Editor').then((module) => module.default),
   {
     ssr: false,
-    loading: () => <SkeletonPanel />
+    loading: () => (
+      <SkeletonPanel className='rounded-t-[20px] rounded-b-none @md:rounded-r-none @md:rounded-l-[20px]' />
+    )
   }
 );
 
