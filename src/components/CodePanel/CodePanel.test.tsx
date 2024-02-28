@@ -1,12 +1,13 @@
 import { render, waitFor } from '@testing-library/react';
+
 import { CodePanel } from '.';
 
 jest.mock('@/services/codeService', () => ({
-  buildCode: jest.fn().mockResolvedValue({ output: '', error: '' })
+  buildCode: jest.fn().mockResolvedValue({ output: '', error: '' }),
 }));
 
 jest.mock('@/hooks/useMobileLayout', () => ({
-  useMobileLayout: jest.fn().mockReturnValue(false)
+  useMobileLayout: jest.fn().mockReturnValue(false),
 }));
 
 describe('CodePanel component', () => {

@@ -13,24 +13,24 @@ export const buildCode = async (code: string) => {
       plugins: [unpkgPathPlugin(), fetchPlugin(code)],
       define: {
         'process.env.NODE_ENV': '"production"',
-        global: 'window'
-      }
+        global: 'window',
+      },
     });
 
     return {
       output: result.outputFiles[0].text,
-      error: ''
+      error: '',
     };
   } catch (error) {
     if (error instanceof Error) {
       return {
         output: '',
-        error: error.message
+        error: error.message,
       };
     } else {
       return {
         output: '',
-        error: 'Unknown error'
+        error: 'Unknown error',
       };
     }
   }
