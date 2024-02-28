@@ -7,6 +7,7 @@ interface Props {
 
 export const SkeletonPanel = ({ className = '' }: Props) => (
   <div
+    data-testid='skeleton-panel'
     className={twMerge(
       'w-full h-full bg-zinc-800 flex flex-col gap-4 justify-center items-center rounded-[20px] border-2 border-neutral-400',
       className
