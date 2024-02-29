@@ -9,8 +9,8 @@ const createRedisClient = async () => {
     password: process.env.REDIS_PASS,
     socket: {
       host: process.env.REDIS_HOST,
-      port: process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT) : 11035
-    }
+      port: process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT) : 11035,
+    },
   });
 
   await client.connect();
@@ -26,7 +26,7 @@ export const fetchPlugin = (input: string) => {
       build.onLoad({ filter: /^index\.js$/ }, () => {
         return {
           loader: 'jsx',
-          contents: input
+          contents: input,
         };
       });
 
@@ -58,11 +58,11 @@ export const fetchPlugin = (input: string) => {
         const result = {
           loader: 'jsx' as const,
           contents,
-          resolveDir: new URL('./', request.res.responseUrl).pathname
+          resolveDir: new URL('./', request.res.responseUrl).pathname,
         };
 
         await redisClient.set(args.path, JSON.stringify(result), {
-          EX: 60 * 60 * 24 // expires in 1 day
+          EX: 60 * 60 * 24, // expires in 1 day
         });
 
         return result;
@@ -74,15 +74,15 @@ export const fetchPlugin = (input: string) => {
         const result = {
           loader: 'jsx' as const,
           contents: data,
-          resolveDir: new URL('./', request.res.responseUrl).pathname
+          resolveDir: new URL('./', request.res.responseUrl).pathname,
         };
 
         await redisClient.set(args.path, JSON.stringify(result), {
-          EX: 60 * 60 * 24 // expires in 1 day
+          EX: 60 * 60 * 24, // expires in 1 day
         });
 
         return result;
       });
-    }
+    },
   };
 };

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+
 import { Separator } from '../ui/separator';
 
 interface Props {
@@ -67,20 +68,20 @@ export const Preview = ({ code, error }: Props) => {
   }, [code]);
 
   return (
-    <div className='relative h-full bg-zinc-800 p-4 border-2 border-neutral-400 rounded-b-[20px] @md:rounded-l-none @md:rounded-r-[20px]'>
-      <h4 className='text-zinc-50 mb-3'>Console</h4>
+    <div className="relative h-full bg-zinc-800 p-4 border-2 border-neutral-400 rounded-b-[20px] @md:rounded-l-none @md:rounded-r-[20px]">
+      <h4 className="text-zinc-50 mb-3">Console</h4>
 
       <Separator />
 
       <iframe
-        title='preview'
+        title="preview"
         ref={iframe}
-        sandbox='allow-scripts'
+        sandbox="allow-scripts"
         srcDoc={html}
-        className='w-full h-[93%] bg-zinc-800 mt-1'
+        className="w-full h-[93%] bg-zinc-800 mt-1"
       />
       {error && (
-        <div className='absolute top-16 left-4 text-red-500'>{error}</div>
+        <div className="absolute top-16 left-4 text-red-500">{error}</div>
       )}
     </div>
   );

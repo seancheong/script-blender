@@ -1,6 +1,7 @@
 import { Header } from '@/components/Header';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+
 import { cn } from '../lib/utils';
 import './globals.css';
 
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
   keywords:
     'JavaScript, TypeScript, Coding, Programming, Code Editor, Monaco Editor, Interactive Coding, Web Development',
   authors: [
-    { name: 'Sean Cheong Zhen Xiong', url: 'https://github.com/seancheong' }
+    { name: 'Sean Cheong Zhen Xiong', url: 'https://github.com/seancheong' },
   ],
   metadataBase: new URL('https://www.script-blender.com'),
   openGraph: {
@@ -26,29 +27,29 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/screenshot.png`
-      }
-    ]
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/screenshot.png`,
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title,
     description,
-    images: [`${process.env.NEXT_PUBLIC_BASE_URL}/screenshot.png`]
-  }
+    images: [`${process.env.NEXT_PUBLIC_BASE_URL}/screenshot.png`],
+  },
 };
 
 export default function RootLayout({
-  children
+  children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en'>
+    <html lang="en">
       <body
         className={cn(
           'min-h-screen bg-neutral-800 font-sans antialiased',
-          inter.variable
+          inter.variable,
         )}
       >
         <div>

@@ -1,4 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
+
 import { useMobileLayout } from './useMobileLayout';
 
 /**
@@ -37,14 +38,14 @@ class MockResizeObserver {
               right: 0,
               toJSON: function () {
                 console.log('Function not implemented.');
-              }
+              },
             },
             borderBoxSize: [],
             contentBoxSize: [],
-            devicePixelContentBoxSize: []
-          }
+            devicePixelContentBoxSize: [],
+          },
         ],
-        this as any
+        this as any,
       );
     }
   }
@@ -56,14 +57,14 @@ let mockElement: HTMLElement;
 describe('useMobileLayout hook', () => {
   beforeEach(() => {
     global.ResizeObserver = jest.fn(function (
-      callback: ResizeObserverCallback
+      callback: ResizeObserverCallback,
     ) {
       mockResizeObserver = new MockResizeObserver(callback);
 
       return {
         observe: mockResizeObserver.observe.bind(mockResizeObserver),
         unobserve: mockResizeObserver.unobserve.bind(mockResizeObserver),
-        disconnect: jest.fn()
+        disconnect: jest.fn(),
       };
     });
 

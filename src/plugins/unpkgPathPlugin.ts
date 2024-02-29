@@ -14,7 +14,7 @@ export const unpkgPathPlugin = () => {
       build.onResolve({ filter: /^\.+\// }, (args: any) => {
         return {
           namespace: 'a',
-          path: new URL(args.path, `https://unpkg.com${args.resolveDir}/`).href
+          path: new URL(args.path, `https://unpkg.com${args.resolveDir}/`).href,
         };
       });
 
@@ -22,9 +22,9 @@ export const unpkgPathPlugin = () => {
       build.onResolve({ filter: /.*/ }, async (args: any) => {
         return {
           namespace: 'a',
-          path: `https://unpkg.com/${args.path}`
+          path: `https://unpkg.com/${args.path}`,
         };
       });
-    }
+    },
   };
 };

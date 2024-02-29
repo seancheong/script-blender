@@ -4,10 +4,11 @@ import { useMobileLayout } from '@/hooks/useMobileLayout';
 import { buildCode } from '@/services/codeService';
 import dynamic from 'next/dynamic';
 import { useCallback, useEffect, useState } from 'react';
+
 import {
   ResizableHandle,
   ResizablePanel,
-  ResizablePanelGroup
+  ResizablePanelGroup,
 } from '../ui/resizable';
 import { Preview } from './Preview';
 import { SkeletonPanel } from './SkeletonPanel';
@@ -22,9 +23,9 @@ const DynamicEditor = dynamic(
   {
     ssr: false,
     loading: () => (
-      <SkeletonPanel className='rounded-t-[20px] rounded-b-none @md:rounded-r-none @md:rounded-l-[20px]' />
-    )
-  }
+      <SkeletonPanel className="rounded-t-[20px] rounded-b-none @md:rounded-r-none @md:rounded-l-[20px]" />
+    ),
+  },
 );
 
 export const CodePanel = () => {
@@ -45,7 +46,7 @@ export const CodePanel = () => {
         setError(error);
       });
     },
-    [code]
+    [code],
   );
 
   useEffect(() => {
@@ -69,7 +70,7 @@ export const CodePanel = () => {
   }, [code, handleCodeExecution]);
 
   return (
-    <div id={elementId} className='@container h-full'>
+    <div id={elementId} className="@container h-full">
       {loading ? (
         <SkeletonPanel />
       ) : (
