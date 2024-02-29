@@ -25,7 +25,7 @@ export const fetchPlugin = (input: string) => {
     setup(build: esbuild.PluginBuild) {
       build.onLoad({ filter: /^index\.js$/ }, () => {
         return {
-          loader: 'jsx',
+          loader: 'tsx',
           contents: input,
         };
       });

@@ -13,13 +13,15 @@ import {
 import { Preview } from './Preview';
 import { SkeletonPanel } from './SkeletonPanel';
 
-const elementId = 'code-panel';
-const initialValue =
+const ELEMENT_ID = 'code-panel';
+const INITIAL_VALUE =
   '// Write your code here\n// then press Ctrl+S/Cmd+S to execute it';
 
 const DynamicEditor = dynamic(
   () =>
-    import('@/components/CodePanel/Editor').then((module) => module.default),
+    import('@/components/CodePanel/CodeEditor').then(
+      (module) => module.default,
+    ),
   {
     ssr: false,
     loading: () => (
@@ -35,16 +37,15 @@ export const CodePanel = () => {
   const [loading, setLoading] = useState(true);
   const [_document, setDocument] = useState<Document | null>(null);
 
-  const targetElement = _document?.getElementById(elementId);
+  const targetElement = _document?.getElementById(ELEMENT_ID);
   const isMobileLayout = useMobileLayout(targetElement || null);
 
   const handleCodeExecution = useCallback(
     async (newCode?: string) => {
-      buildCode(newCode ?? code).then(({ output, error }) => {
-        setOutput(output);
+      const { output, error } = await buildCode(newCode ?? code);
 
-        setError(error);
-      });
+      setOutput(output);
+      setError(error);
     },
     [code],
   );
@@ -70,7 +71,7 @@ export const CodePanel = () => {
   }, [code, handleCodeExecution]);
 
   return (
-    <div id={elementId} className="@container h-full">
+    <div id={ELEMENT_ID} className="@container h-full">
       {loading ? (
         <SkeletonPanel />
       ) : (
@@ -79,9 +80,10 @@ export const CodePanel = () => {
         >
           <ResizablePanel>
             <DynamicEditor
-              initialValue={initialValue}
+              initialValue={INITIAL_VALUE}
               onChange={setCode}
               onExecute={handleCodeExecution}
+              onError={setError}
             />
           </ResizablePanel>
 
