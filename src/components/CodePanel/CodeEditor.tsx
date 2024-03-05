@@ -26,16 +26,16 @@ interface Props {
   onError(errorMesssage: string): void;
 }
 
-const LANGUAGES = ['javascript', 'typescript'] as const;
-type Language = (typeof LANGUAGES)[number];
+const LANGUAGES = [
+  { name: 'JavaScript', value: 'javascript' },
+  { name: 'TypeScript', value: 'typescript' },
+] as const;
+type Language = (typeof LANGUAGES)[number]['value'];
 
 const CodeEditor = ({ initialValue, onChange, onExecute, onError }: Props) => {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
 
   const [language, setLanguage] = useState<Language>('javascript');
-
-  const upperCaseFirstChar = (str: string) =>
-    str.charAt(0).toUpperCase() + str.slice(1);
 
   const handleFormatClick = async () => {
     if (editorRef.current) {
@@ -91,8 +91,8 @@ const CodeEditor = ({ initialValue, onChange, onExecute, onError }: Props) => {
         <SelectContent>
           <SelectGroup>
             {LANGUAGES.map((language) => (
-              <SelectItem key={language} value={language}>
-                {upperCaseFirstChar(language)}
+              <SelectItem key={language.value} value={language.value}>
+                {language.name}
               </SelectItem>
             ))}
           </SelectGroup>
