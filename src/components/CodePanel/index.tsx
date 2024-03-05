@@ -3,7 +3,8 @@
 import { useMobileLayout } from '@/hooks/useMobileLayout';
 import { buildCode } from '@/services/codeService';
 import dynamic from 'next/dynamic';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { toast } from 'sonner';
 
 import {
   ResizableHandle,
@@ -37,18 +38,30 @@ export const CodePanel = () => {
   const [loading, setLoading] = useState(true);
   const [_document, setDocument] = useState<Document | null>(null);
 
+  const actionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   const targetElement = _document?.getElementById(ELEMENT_ID);
   const isMobileLayout = useMobileLayout(targetElement || null);
 
   const handleCodeExecution = useCallback(
     async (newCode?: string) => {
+      cancelActionTimeout();
+
       const { output, error } = await buildCode(newCode ?? code);
 
       setOutput(output);
       setError(error);
+
+      toast('Code Executed');
     },
     [code],
   );
+
+  const cancelActionTimeout = () => {
+    if (actionTimeoutRef.current) clearTimeout(actionTimeoutRef.current);
+
+    actionTimeoutRef.current = null;
+  };
 
   useEffect(() => {
     setDocument(document);
@@ -61,12 +74,12 @@ export const CodePanel = () => {
   useEffect(() => {
     const actionTimer = 5000;
 
-    const actionTimeout = setTimeout(() => {
+    actionTimeoutRef.current = setTimeout(() => {
       handleCodeExecution();
     }, actionTimer);
 
     return () => {
-      clearTimeout(actionTimeout);
+      cancelActionTimeout();
     };
   }, [code, handleCodeExecution]);
 
