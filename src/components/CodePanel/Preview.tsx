@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import { useEffect, useRef } from 'react';
 
 import { Separator } from '../ui/separator';
@@ -78,8 +79,9 @@ export const Preview = ({ code, error }: Props) => {
         ref={iframe}
         sandbox="allow-scripts"
         srcDoc={html}
-        className="w-full h-[93%] bg-zinc-800 mt-1"
+        className={clsx('w-full h-[93%] bg-zinc-800 mt-1', error && 'hidden')}
       />
+
       {error && (
         <div className="absolute top-16 left-4 text-red-500">{error}</div>
       )}

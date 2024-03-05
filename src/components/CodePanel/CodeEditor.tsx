@@ -6,12 +6,13 @@ import Highlighter from 'monaco-jsx-highlighter';
 import prettier from 'prettier';
 import babel from 'prettier/plugins/babel';
 import esTree from 'prettier/plugins/estree';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 import { Button } from '../ui/button';
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -22,10 +23,19 @@ interface Props {
   initialValue: string;
   onChange(value: string): void;
   onExecute(value: string): void;
+  onError(errorMesssage: string): void;
 }
 
-const CodeEditor = ({ initialValue, onChange, onExecute }: Props) => {
+const LANGUAGES = [
+  { name: 'JavaScript', value: 'javascript' },
+  { name: 'TypeScript', value: 'typescript' },
+] as const;
+type Language = (typeof LANGUAGES)[number]['value'];
+
+const CodeEditor = ({ initialValue, onChange, onExecute, onError }: Props) => {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
+
+  const [language, setLanguage] = useState<Language>('javascript');
 
   const handleFormatClick = async () => {
     if (editorRef.current) {
@@ -70,15 +80,22 @@ const CodeEditor = ({ initialValue, onChange, onExecute }: Props) => {
         Format
       </Button>
 
-      <Select>
-        <SelectTrigger className="w-28 ml-4 mb-4 h-8">
-          <SelectValue placeholder="Javascript" />
+      <Select
+        value={language}
+        onValueChange={(language: Language) => setLanguage(language)}
+      >
+        <SelectTrigger className="w-28 ml-4 mb-4 h-8 focus:ring-offset-0">
+          <SelectValue />
         </SelectTrigger>
 
-        <SelectContent className="h-8">
-          <SelectItem value="javascript" className="py-0">
-            Javascript
-          </SelectItem>
+        <SelectContent>
+          <SelectGroup>
+            {LANGUAGES.map((language) => (
+              <SelectItem key={language.value} value={language.value}>
+                {language.name}
+              </SelectItem>
+            ))}
+          </SelectGroup>
         </SelectContent>
       </Select>
 
@@ -86,9 +103,12 @@ const CodeEditor = ({ initialValue, onChange, onExecute }: Props) => {
         value={initialValue}
         onMount={handleEditorOnMount}
         onChange={(value) => onChange(value || '')}
+        onValidate={(markers) =>
+          onError(markers.map((marker) => marker.message).join('\n'))
+        }
         height={'90%'}
         theme="vs-dark"
-        language="javascript"
+        language={language}
         options={{
           wordWrap: 'on',
           minimap: { enabled: false },

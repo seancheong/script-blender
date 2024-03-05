@@ -3,7 +3,8 @@
 import { useMobileLayout } from '@/hooks/useMobileLayout';
 import { buildCode } from '@/services/codeService';
 import dynamic from 'next/dynamic';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { toast } from 'sonner';
 
 import {
   ResizableHandle,
@@ -13,13 +14,15 @@ import {
 import { Preview } from './Preview';
 import { SkeletonPanel } from './SkeletonPanel';
 
-const elementId = 'code-panel';
-const initialValue =
+const ELEMENT_ID = 'code-panel';
+const INITIAL_VALUE =
   '// Write your code here\n// then press Ctrl+S/Cmd+S to execute it';
 
 const DynamicEditor = dynamic(
   () =>
-    import('@/components/CodePanel/Editor').then((module) => module.default),
+    import('@/components/CodePanel/CodeEditor').then(
+      (module) => module.default,
+    ),
   {
     ssr: false,
     loading: () => (
@@ -35,19 +38,30 @@ export const CodePanel = () => {
   const [loading, setLoading] = useState(true);
   const [_document, setDocument] = useState<Document | null>(null);
 
-  const targetElement = _document?.getElementById(elementId);
+  const actionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const targetElement = _document?.getElementById(ELEMENT_ID);
   const isMobileLayout = useMobileLayout(targetElement || null);
 
   const handleCodeExecution = useCallback(
     async (newCode?: string) => {
-      buildCode(newCode ?? code).then(({ output, error }) => {
-        setOutput(output);
+      cancelActionTimeout();
 
-        setError(error);
-      });
+      const { output, error } = await buildCode(newCode ?? code);
+
+      setOutput(output);
+      setError(error);
+
+      toast('Code Executed');
     },
     [code],
   );
+
+  const cancelActionTimeout = () => {
+    if (actionTimeoutRef.current) clearTimeout(actionTimeoutRef.current);
+
+    actionTimeoutRef.current = null;
+  };
 
   useEffect(() => {
     setDocument(document);
@@ -60,17 +74,17 @@ export const CodePanel = () => {
   useEffect(() => {
     const actionTimer = 5000;
 
-    const actionTimeout = setTimeout(() => {
+    actionTimeoutRef.current = setTimeout(() => {
       handleCodeExecution();
     }, actionTimer);
 
     return () => {
-      clearTimeout(actionTimeout);
+      cancelActionTimeout();
     };
   }, [code, handleCodeExecution]);
 
   return (
-    <div id={elementId} className="@container h-full">
+    <div id={ELEMENT_ID} className="@container h-full">
       {loading ? (
         <SkeletonPanel />
       ) : (
@@ -79,9 +93,10 @@ export const CodePanel = () => {
         >
           <ResizablePanel>
             <DynamicEditor
-              initialValue={initialValue}
+              initialValue={INITIAL_VALUE}
               onChange={setCode}
               onExecute={handleCodeExecution}
+              onError={setError}
             />
           </ResizablePanel>
 
