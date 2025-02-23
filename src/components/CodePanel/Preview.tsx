@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { Separator } from '../ui/separator';
 
@@ -55,6 +55,18 @@ const html = `
 
 export const Preview = ({ code, error }: Props) => {
   const iframe = useRef<HTMLIFrameElement>(null);
+  const [initialized, setInitialized] = useState(false);
+
+  // The iframe needs a brief moment where it's hidden to properly initialize its internal state
+  // Without this initialization period, the console.log override doesn't work on first render
+  // This is likely due to a race condition in how iframes establish the JavaScript context
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setInitialized(true);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (iframe.current) {
@@ -79,8 +91,17 @@ export const Preview = ({ code, error }: Props) => {
         ref={iframe}
         sandbox="allow-scripts"
         srcDoc={html}
-        className={clsx('w-full h-[93%] bg-zinc-800 mt-1', error && 'hidden')}
+        className={clsx(
+          'w-full h-[93%] bg-zinc-800 mt-1',
+          (!initialized || error) && 'hidden',
+        )}
       />
+
+      {!initialized && (
+        <div className="absolute top-16 left-4 text-neutral-400">
+          Initializing console preview...
+        </div>
+      )}
 
       {error && (
         <div className="absolute top-16 left-4 text-red-500">{error}</div>
