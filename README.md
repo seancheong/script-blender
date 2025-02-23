@@ -4,7 +4,7 @@
 
 **Script Blender** is a web-based platform that enhances the coding experience for JavaScript and TypeScript developers. It enables users to create and edit code snippets, providing instant feedback with real-time execution results. This tool is perfect for both novice and experienced developers, offering a streamlined environment conducive to learning, experimentation, and project management.
 
-View the coding platform web app live at [https://www.script-blender.com](https://www.script-blender.com)
+View the coding platform web app live at [https://script-blender-rvaw-git-main-sean-cheong-zhen-xiongs-projects.vercel.app/](https://script-blender-rvaw-git-main-sean-cheong-zhen-xiongs-projects.vercel.app/)
 
 ## Key Features
 
