@@ -18,8 +18,10 @@ describe('CodePanel component', () => {
   });
 
   it('renders the CodeEditor component after some time has passed', async () => {
-    const { getByText } = render(<CodePanel />);
+    const { getByRole } = render(<CodePanel />);
 
-    await waitFor(() => expect(getByText(/console/i)).toBeInTheDocument());
+    await waitFor(() =>
+      expect(getByRole('heading', { name: /console/i })).toBeInTheDocument(),
+    );
   });
 });

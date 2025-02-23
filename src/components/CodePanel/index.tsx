@@ -16,7 +16,7 @@ import { SkeletonPanel } from './SkeletonPanel';
 
 const ELEMENT_ID = 'code-panel';
 const INITIAL_VALUE =
-  '// Write your code here\n// then press Ctrl+S/Cmd+S to execute it';
+  '// Write your code here\n// then press Ctrl+S/Cmd+S to execute it\n// console.log() will be printed inside the Console preview';
 
 const DynamicEditor = dynamic(
   () =>
