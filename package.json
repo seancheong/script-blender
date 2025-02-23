@@ -29,7 +29,7 @@
     "axios": "^1.7.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
-    "esbuild": "^0.19.8",
+    "esbuild": "^0.25.0",
     "lucide-react": "^0.302.0",
     "monaco-jsx-highlighter": "^2.0.4",
     "next": "14.2.22",
