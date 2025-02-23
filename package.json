@@ -32,7 +32,7 @@
     "esbuild": "^0.19.8",
     "lucide-react": "^0.302.0",
     "monaco-jsx-highlighter": "^2.0.4",
-    "next": "14.2.12",
+    "next": "14.2.22",
     "next-themes": "^0.2.1",
     "prettier": "^3.1.1",
     "react": "^18",
