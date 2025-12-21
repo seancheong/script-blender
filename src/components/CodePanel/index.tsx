@@ -43,6 +43,12 @@ export const CodePanel = () => {
   const targetElement = _document?.getElementById(ELEMENT_ID);
   const isMobileLayout = useMobileLayout(targetElement || null);
 
+  const cancelActionTimeout = () => {
+    if (actionTimeoutRef.current) clearTimeout(actionTimeoutRef.current);
+
+    actionTimeoutRef.current = null;
+  };
+
   const handleCodeExecution = useCallback(
     async (newCode?: string) => {
       cancelActionTimeout();
@@ -57,13 +63,8 @@ export const CodePanel = () => {
     [code],
   );
 
-  const cancelActionTimeout = () => {
-    if (actionTimeoutRef.current) clearTimeout(actionTimeoutRef.current);
-
-    actionTimeoutRef.current = null;
-  };
-
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setDocument(document);
 
     setTimeout(() => {
